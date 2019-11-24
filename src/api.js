@@ -1,13 +1,11 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-
-const movieRouter = require("./src/routers/movie-router");
+import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
+import config from "./config";
+import movieRouter from "./routers/movie-router";
 
 const api = express();
-const port = 3000;
 const router = express.Router();
-
 
 api.use(cors());
 api.use(bodyParser.urlencoded({ extended: true }));
@@ -20,6 +18,6 @@ router.get("/", (req, resp) => resp.json({
 api.use("/", router);
 api.use("/movie", movieRouter);
 
-api.listen(port);
+api.listen(config.port);
 
 console.log("Run...")

@@ -5,12 +5,8 @@
   "main": "api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node api.js",
-    "lint": "./node_modules/.bin/eslint src/* --fix",
-    "clean": "rm -rf build && mkdir build",
-    "build-babel": "babel -d ./build ./src -s",
-    "build": "npm run clean && npm run build-babel",
-
+    "start": "nodemon --exec babel-node src/api.js",
+    "lint": "./node_modules/.bin/eslint src/* --fix"
   },
   "keywords": [],
   "author": "",
