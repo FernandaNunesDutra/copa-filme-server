@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-const movieRouter = require("./src/router/movie-router");
+const movieRouter = require("./src/routers/movie-router");
 
 const api = express();
 const port = 3000;

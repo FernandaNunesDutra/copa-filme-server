@@ -1,28 +1,30 @@
 import MovieApi from "../api/movie-api";
-import ArrayHelper from "../helper/array-helper";
-import { TITLE_PROPERTY } from "../constants";
+import ArrayHelper from "../helpers/array-helper";
+import { TITLE_PROPERTY, RATING_PROPERTY } from "../constants";
 
 export default class MovieService {
+
+    constructor(movies){
+        this.movies = movies;
+    }
 
     static async getAll() {
         return await MovieApi.getAll();
     }
 
-    static async getChampions(selectedMovies) {
+    getChampions() {
 
-        selectedMovies = (await this.getAll()).slice(8);
-
-        return this.compareMovies(selectedMovies);
+        return this.compareMovies();
     }
 
-    static sortMoviesByTitle(movies) {
-        const arrayHelper = new ArrayHelper(movies);
+    sortMoviesByTitle() {
+        const arrayHelper = new ArrayHelper(this.movies);
         return arrayHelper.sortByStringProperty(TITLE_PROPERTY);
     }
 
-    static buildMovieTreeDiagram(movies) {
+    buildMovieTreeDiagram() {
 
-        const orderedMovies = this.sortMoviesByTitle(movies);
+        const orderedMovies = this.sortMoviesByTitle();
 
         const length = orderedMovies.length;
         const halfMovies = orderedMovies.slice(0, length / 2);
@@ -33,26 +35,26 @@ export default class MovieService {
         }, []);
     }
 
-    static async compareMovies(movies) {
+    compareMovies() {
 
-        const movieTreeDiagram = this.buildMovieTreeDiagram(movies);
+        const movieTreeDiagram = this.buildMovieTreeDiagram();
 
         return this.compareRatingMovie(movieTreeDiagram, 0);
     }
 
-    static compareRatingMovie(movies, index) {
+    compareRatingMovie(movies, index) {
 
         if (this.isEndOfCompetition(movies)) {
             return this.getClassification(movies[0], movies[1]);           
         }
 
         const arrayHelper = new ArrayHelper(movies);
-        movies = arrayHelper.removeLessValuePropertyBetween(index, index + 1, "nota");
+        movies = arrayHelper.removeLessValuePropertyBetween(index, index + 1, RATING_PROPERTY);
 
         return this.compareRatingMovie(movies, this.getNextMovieIndex(index, movies.length))
     }
 
-    static getClassification(firstMovie, secondMovie){
+    getClassification(firstMovie, secondMovie){
         const isFirstHighest = firstMovie.nota > secondMovie.nota;
         
         return {
@@ -61,14 +63,14 @@ export default class MovieService {
         }
     }
 
-    static getNextMovieIndex(index, movieLength) {
+    getNextMovieIndex(index, movieLength) {
         const NEXT_GROUP = index + 1;
         const NEXT_FASE = 0;
 
         return index + 1 == movieLength ? NEXT_FASE : NEXT_GROUP;
     }
 
-    static isEndOfCompetition(movies) {
+    isEndOfCompetition(movies) {
         return movies.length == 2;
     }
 
