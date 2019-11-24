@@ -1,1 +1,1 @@
-web: npm run build && babel-node src/api.js
+babel-node src/api.js
