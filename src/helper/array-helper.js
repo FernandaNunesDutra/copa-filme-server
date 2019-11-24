@@ -6,8 +6,8 @@ export default class ArrayHelper {
         this.arr = arr;
     }
 
-    sortByStringProperty(proprety){
-        return this.arr.sort((a, b) => StringHelper.compare(a[proprety], b[proprety]));
+    sortByStringProperty(property){
+        return this.arr.sort((a, b) => StringHelper.compare(a[property], b[property]));
     }
 
 }
