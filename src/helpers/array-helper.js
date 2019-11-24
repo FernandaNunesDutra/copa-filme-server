@@ -7,7 +7,9 @@ export default class ArrayHelper {
     }
 
     sortByStringProperty(property) {
-        return this.arr.sort((a, b) => StringHelper.compare(a[property], b[property]));
+        return this.arr.sort((a, b) => { 
+            return StringHelper.compare(a[property], b[property])
+        });
     }
 
     remove(index) {
@@ -19,8 +21,6 @@ export default class ArrayHelper {
         const removeIndex = this.arr[firstIndex][property] > this.arr[secondIndex][property] ? secondIndex : firstIndex;
 
         this.remove(removeIndex);
-
-        return this.arr;
     }
 
 }

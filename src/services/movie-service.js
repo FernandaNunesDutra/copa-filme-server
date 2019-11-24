@@ -1,11 +1,15 @@
 import MovieApi from "../api/movie-api";
 import ArrayHelper from "../helpers/array-helper";
+import StringHelper from "../helpers/string-helper";
+
 import { TITLE_PROPERTY, RATING_PROPERTY } from "../constants";
 
 export default class MovieService {
 
-    constructor(movies){
+    constructor(movies) {
         this.movies = movies;
+        this.moviesClassification = movies;
+        this.arrayHelper = new ArrayHelper(movies);
     }
 
     static async getAll() {
@@ -18,8 +22,7 @@ export default class MovieService {
     }
 
     sortMoviesByTitle() {
-        const arrayHelper = new ArrayHelper(this.movies);
-        return arrayHelper.sortByStringProperty(TITLE_PROPERTY);
+        return this.arrayHelper.sortByStringProperty(TITLE_PROPERTY);
     }
 
     buildMovieTreeDiagram() {
@@ -39,39 +42,62 @@ export default class MovieService {
 
         const movieTreeDiagram = this.buildMovieTreeDiagram();
 
-        return this.compareRatingMovie(movieTreeDiagram, 0);
+        return this.compareRatingMovie();
     }
 
-    compareRatingMovie(movies, index) {
+    compareRatingMovie(index = 0) {
 
-        if (this.isEndOfCompetition(movies)) {
-            return this.getClassification(movies[0], movies[1]);           
+        if (this.isEndOfCompetition()) {
+            return this.getClassification(this.moviesClassification[0], this.moviesClassification[1]);
         }
 
-        const arrayHelper = new ArrayHelper(movies);
-        movies = arrayHelper.removeLessValuePropertyBetween(index, index + 1, RATING_PROPERTY);
+        this.removeLoserMovie(index);
 
-        return this.compareRatingMovie(movies, this.getNextMovieIndex(index, movies.length))
+        return this.compareRatingMovie(this.getNextMovieIndex(index))
     }
 
-    getClassification(firstMovie, secondMovie){
+    removeLoserMovie(index) {
+
+        if (this.isSameRating(this.moviesClassification[index], this.moviesClassification[index + 1])) {
+            const stringCompare = StringHelper.compare(this.moviesClassification[index].title,
+                this.moviesClassification[index + 1].title);
+
+            const indexRemove = (stringCompare > 0) ? index : index + 1;
+
+            this.arrayHelper.remove(indexRemove);
+
+        } else {
+
+             this.arrayHelper.removeLessValuePropertyBetween(index, index + 1, RATING_PROPERTY);
+        }
+
+        this.moviesClassification = this.arrayHelper.arr;
+
+    }
+
+    isSameRating(firstMovie, secondMovie) {
+        console.log(firstMovie.title, secondMovie.title, firstMovie.rating == secondMovie.rating)
+        return firstMovie.rating == secondMovie.rating;
+    }
+
+    getClassification(firstMovie, secondMovie) {
         const isFirstHighest = firstMovie.nota > secondMovie.nota;
-        
+
         return {
             first: isFirstHighest ? firstMovie : secondMovie,
             second: isFirstHighest ? secondMovie : firstMovie,
         }
     }
 
-    getNextMovieIndex(index, movieLength) {
+    getNextMovieIndex(index) {
         const NEXT_GROUP = index + 1;
         const NEXT_FASE = 0;
 
-        return index + 1 == movieLength ? NEXT_FASE : NEXT_GROUP;
+        return index + 1 == this.moviesClassification.length ? NEXT_FASE : NEXT_GROUP;
     }
 
-    isEndOfCompetition(movies) {
-        return movies.length == 2;
+    isEndOfCompetition() {
+        return this.moviesClassification.length == 2;
     }
 
 }
