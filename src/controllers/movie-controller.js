@@ -8,7 +8,7 @@ export default class MovieController {
   }
 
   static async getAll() {
-    return this.service.getAll();
+    return MovieService.getAll();
   }
 
   getChampions() {
