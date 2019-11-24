@@ -12,6 +12,6 @@ export default {
 
     port: parseInt(process.env.PORT, 10),
 
-    movieApi: process.env.MOVIE_API
+    movieApi: "http://copafilmes.azurewebsites.net/api/filmes"
 
 };

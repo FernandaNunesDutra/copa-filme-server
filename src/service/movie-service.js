@@ -1,4 +1,5 @@
 import MovieApi from "../api/movie-api";
+import ArrayHelper from "../helper/array-helper";
 
 export default class MovieService {
 
@@ -6,7 +7,12 @@ export default class MovieService {
         return await MovieApi.getAll();
     }
 
-    static getChampions() {
+    static async getChampions(selectedMovies) {
+        selectedMovies = await this.getAll();
+        const arrayHelper = new ArrayHelper(selectedMovies);
 
+        const orderedMovies = arrayHelper.sortByStringProperty("titulo");
+
+        return orderedMovies;
     }
 }

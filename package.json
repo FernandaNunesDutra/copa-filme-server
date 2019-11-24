@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node api.js"
+    "start": "nodemon --exec babel-node api.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
     "@babel/node": "^7.7.4",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/polyfill": "^7.7.0",
+    "dotenv": "^8.2.0",
     "node-fetch": "^2.6.0"
   }
 }
