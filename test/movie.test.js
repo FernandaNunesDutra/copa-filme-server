@@ -1,6 +1,8 @@
 require("babel-register")();
 
 import "babel-polyfill";
+
+import MovieService from "../src/services/movie-service";
 import chai from "chai";
 import chaiHttp from "chai-http";
 import app from "../src/api";
@@ -10,6 +12,8 @@ import {
     AVENGERS_CODE,
     INCREDIBLES_CODE,
     DEADPOOL_CODE,
+    ORDERED_MOVIES,
+    TREE_DIAGRAM_MOVIES,
 } from "../dummy";
 
 const expect = chai.expect;
@@ -39,8 +43,8 @@ describe("Get all movies", () => {
     });
 });
 
-describe("Get champion and vice movie movies among 8 choosen", () => {
-    it("should return 1° Avengers/2º Incredibles", (done) => {
+describe("Get champion and vice movies among 8 choosen", () => {
+    it("should return 1° Avengers/2º Incredibles (different ratings)", (done) => {
         chai.request(app)
             .post("/movie/champions")
             .send(SELECTED_MOVIES)
@@ -61,10 +65,8 @@ describe("Get champion and vice movie movies among 8 choosen", () => {
                 done();
             });
     });
-});
 
-describe("Get champion and vice movie movies among 8 movies choosen (with same rating)", () => {
-    it("should return 1° Deadpool/2º Incredibles", (done) => {
+    it("should return 1° Deadpool/2º Incredibles (same rating)", (done) => {
         chai.request(app)
             .post("/movie/champions")
             .send(SELECTED_MOVIES_SAME_RATING)
@@ -84,5 +86,31 @@ describe("Get champion and vice movie movies among 8 movies choosen (with same r
 
                 done();
             });
+    });
+});
+
+describe("Return movies sorted alphabetically", () => {
+    it("should return movies sorted", function () {
+        const service = new MovieService(SELECTED_MOVIES.selectedMovies);
+        const moviesSorted = service.sortMoviesByTitle();
+
+        const sameMovieOrder = ORDERED_MOVIES.reduce(function (sameOrder, movie, index) {
+            return sameOrder && (movie.code == moviesSorted[index]).code;
+        }, true);
+
+        expect(sameMovieOrder);
+    });
+});
+
+describe("Return tree diagram movie", () => {
+    it("should return diagram movie rightly", function () {
+        const service = new MovieService(SELECTED_MOVIES.selectedMovies);
+        const treeDiagram = service.buildMovieTreeDiagram();
+
+        const sameTreeDiagram = TREE_DIAGRAM_MOVIES.reduce(function (sameOrder, movie, index) {
+            return sameOrder && (movie.code == treeDiagram[index]).code;
+        }, true);
+
+        expect(sameTreeDiagram);
     });
 });
