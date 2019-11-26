@@ -3,12 +3,12 @@ import MovieService from "../services/movie-service";
 
 export default class MovieController {
   constructor(selectedMovies) {
-    this.movies = selectedMovies.map((m) => Movie.parseFromJson(m));
-    this.service = new MovieService(this.movies);
+    this.service = new MovieService(selectedMovies);
   }
 
   static async getAll() {
-    return MovieService.getAll();
+    const movies = await MovieService.getAll();
+    return movies.map((m) => Movie.parseFromJson(m));
   }
 
   getChampions() {

@@ -7,8 +7,7 @@ import {TITLE_PROPERTY, RATING_PROPERTY} from "../constants";
 export default class MovieService {
   constructor(movies) {
     this.movies = movies;
-    this.moviesClassification = movies;
-    this.arrayHelper = new ArrayHelper(movies);
+    this.moviesClassification = this.buildMovieTreeDiagram();
   }
 
   static async getAll() {
@@ -20,7 +19,8 @@ export default class MovieService {
   }
 
   sortMoviesByTitle() {
-    return this.arrayHelper.sortByStringProperty(TITLE_PROPERTY);
+    const arrayHelper = new ArrayHelper(this.movies);
+    return arrayHelper.sortByStringProperty(TITLE_PROPERTY);
   }
 
   buildMovieTreeDiagram() {
@@ -36,7 +36,6 @@ export default class MovieService {
   }
 
   compareMovies() {
-    const movieTreeDiagram = this.buildMovieTreeDiagram();
 
     return this.compareRatingMovie();
   }
@@ -53,6 +52,9 @@ export default class MovieService {
   }
 
   removeLoserMovie(index) {
+
+    const arrayHelper = new ArrayHelper(this.moviesClassification);
+
     if (this.isSameRating(this.moviesClassification[index],
         this.moviesClassification[index + 1])) {
       const stringCompare = StringHelper.compare(this.moviesClassification[index].title,
@@ -60,21 +62,21 @@ export default class MovieService {
 
       const indexRemove = (stringCompare > 0) ? index : index + 1;
 
-      this.arrayHelper.remove(indexRemove);
+      arrayHelper.remove(indexRemove);
     } else {
-      this.arrayHelper.removeLessValuePropertyBetween(index, index + 1, RATING_PROPERTY);
+      arrayHelper.removeLessValuePropertyBetween(index, index + 1, RATING_PROPERTY);
     }
 
-    this.moviesClassification = this.arrayHelper.arr;
+    this.moviesClassification = arrayHelper.arr;
+
   }
 
   isSameRating(firstMovie, secondMovie) {
-    console.log(firstMovie.title, secondMovie.title, firstMovie.rating == secondMovie.rating);
     return firstMovie.rating == secondMovie.rating;
   }
 
   getClassification(firstMovie, secondMovie) {
-    const isFirstHighest = firstMovie.nota > secondMovie.nota;
+    const isFirstHighest = firstMovie.rating > secondMovie.rating;
 
     return {
       first: isFirstHighest ? firstMovie : secondMovie,

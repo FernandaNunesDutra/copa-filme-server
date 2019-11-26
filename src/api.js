@@ -20,4 +20,6 @@ api.use("/movie", movieRouter);
 
 api.listen(config.port);
 
-console.log("Run...")
+console.log("Run...");
+
+module.exports = api;
