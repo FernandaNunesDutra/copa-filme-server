@@ -2,10 +2,11 @@ require("babel-register")();
 
 import "babel-polyfill";
 
-import MovieService from "../src/services/movie-service";
-import chai from "chai";
+import MovieService from "../services/movie-service";
+import StringHelper from "../helpers/string-helper";
 import chaiHttp from "chai-http";
-import app from "../src/api";
+import chai from "chai";
+import app from "../api";
 import {
     SELECTED_MOVIES_SAME_RATING,
     SELECTED_MOVIES,
@@ -21,6 +22,7 @@ chai.use(chaiHttp);
 chai.should();
 
 describe("Get all movies", () => {
+
     it("should get 16 movies", (done) => {
         chai.request(app)
             .get("/movie/all")
@@ -40,7 +42,7 @@ describe("Get all movies", () => {
 
                 done();
             });
-    });
+    }).timeout(400000);
 });
 
 describe("Get champion and vice movies among 8 choosen", () => {
@@ -112,5 +114,15 @@ describe("Return tree diagram movie", () => {
         }, true);
 
         expect(sameTreeDiagram);
+    });
+});
+
+describe("Compare strings", () => {
+    it("compare strings rightly", function () {   
+        expect(StringHelper.compare("Papelão", "Vestido")).to.equal(-1);
+        expect(StringHelper.compare("Papelão", "Amora")).to.equal(1);
+        expect(StringHelper.compare("Ágape", "Saudade")).to.equal(-1);
+        expect(StringHelper.compare("Maça do Amor", "Chiclete")).to.equal(1);
+        expect(StringHelper.compare("Chiclete", "Chiclete")).to.equal(0);
     });
 });

@@ -4,7 +4,7 @@
   "description": "",
   "main": "api.js",
   "scripts": {
-    "test": "mocha --require @babel/register test/*.js --exit",
+    "test": "mocha --require @babel/register src/test/*.js --exit",
     "start": "nodemon --exec babel-node src/api.js",
     "lint": "./node_modules/.bin/eslint src/* --fix"
   },
