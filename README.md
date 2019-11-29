@@ -1,10 +1,12 @@
 # Copa Filme Servidor
 
 Instalar node https://nodejs.org/en/
+
 Instalar as dependências do projeto
     ```
     npm i
     ```
+
 Executar projeto
      ```
     npm run start
