@@ -1,11 +1,11 @@
 # Copa Filme Servidor
 
-* Instalar node https://nodejs.org/en/
-* Instalar as dependências do projeto
+Instalar node https://nodejs.org/en/
+Instalar as dependências do projeto
     ```
     npm i
     ```
-* Executar projeto
+Executar projeto
      ```
     npm run start
     ```
@@ -20,7 +20,7 @@ Após executar os comandos o projeto da api irá rodar na em http://locallhost:3
   - Retorna o primeiro e o segundo lugar do campeonato.
   
 ## Executando testes
-* Os teste foram desenvolvidos utilizam mocha e chai.
+Os teste foram desenvolvidos utilizam mocha e chai.
 ```
 npm run test
 ```
