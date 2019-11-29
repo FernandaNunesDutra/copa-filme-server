@@ -17,3 +17,5 @@ Após executar os comandos o projeto da api irá rodar na em http://locallhost:3
 ```
 npm run test
 ```
+
+A api está hospedada em https://copa-filme-server.herokuapp.com
