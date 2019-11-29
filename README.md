@@ -22,7 +22,7 @@ Após executar os comandos o projeto da api irá rodar na em http://locallhost:3
   - Retorna o primeiro e o segundo lugar do campeonato.
   
 ## Executando testes
-Os teste foram desenvolvidos utilizam mocha e chai.
+Os teste foram desenvolvidos utilizando mocha e chai.
 ```
 npm run test
 ```
