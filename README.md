@@ -1,8 +1,14 @@
 # Copa Filme Servidor
 
 * Instalar node https://nodejs.org/en/
-* Executar npm i na pasta raiz do projeto
-* Executar npm run start na pasta raiz
+* Instalar as dependências do projeto
+    ```
+    npm i
+    ```
+* Executar projeto
+     ```
+    npm run start
+    ```
 
 Após executar os comandos o projeto da api irá rodar na em http://locallhost:3535.
 
