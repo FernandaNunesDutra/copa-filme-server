@@ -1,13 +1,13 @@
 # Copa Filme Servidor
 
-Instalar node https://nodejs.org/en/
+Instalar node https://nodejs.org/en/.
 
-Instalar as dependências do projeto
+Instalar as dependências do projeto.
     ```
     npm i
     ```
 
-Executar projeto
+Executar projeto.
      ```
     npm run start
     ```
@@ -27,4 +27,4 @@ Os teste foram desenvolvidos utilizam mocha e chai.
 npm run test
 ```
 
-A api está hospedada em https://copa-filme-server.herokuapp.com
+A api está hospedada em https://copa-filme-server.herokuapp.com.
